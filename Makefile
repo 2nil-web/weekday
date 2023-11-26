@@ -114,7 +114,7 @@ upx : strip
 
 ALL_SRCS=$(wildcard *.cpp) $(wildcard *.hpp) $(wildcard *.h)
 format :
-	@clang-format -style="{ BasedOnStyle: Microsoft, IndentWidth: 2 }" --sort-includes -i ${ALL_SRCS}
+	@clang-format -style="{ BasedOnStyle: Microsoft, IndentWidth: 2, SortIncludes: false }" -i ${ALL_SRCS}
 
 clean :
 	rm -f *~ *.d ${PREFIX}.ico *.o $(OBJS) ${DEFAULT_TARGET} $(TARGET) $(TARGET:.exe=Res.manifest)

@@ -1,18 +1,19 @@
 
-#include <iostream>
-#include <functional>
-#include <vector>
-#include <string>
 #include <windows.h>
 #include <windowsx.h>
 #include <uxtheme.h>
+
 #include <chrono>
 #include <ctime>
+#include <functional>
+#include <iostream>
+#include <string>
+#include <vector>
 
-#include "resource.h"
 #include "version.h"
+#include "resource.h"
 
-#define WIN_WIDTH  300
+#define WIN_WIDTH 300
 #define WIN_HEIGHT 100
 
 /* Date de référence pour UNIX 1/1/1970 équivalent au résultat de date_to_julian_day(1970, 1, 1) */
@@ -83,16 +84,16 @@ int days_count(int year)
 
 bool isLeap(int year)
 {
-  return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);/*
-  if (year % 4 == 0)
-  {
-    if (year % 100 == 0 && year % 400 != 0)
-      return false;
-    else
-      return true;
-  }
+  return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0); /*
+   if (year % 4 == 0)
+   {
+     if (year % 100 == 0 && year % 400 != 0)
+       return false;
+     else
+       return true;
+   }
 
-  return false;*/
+   return false;*/
 }
 
 void yearWeekDay(tm TM, int &year, int &nweek, int &wday,
@@ -131,7 +132,7 @@ void yearWeekDay(tm TM, int &year, int &nweek, int &wday,
   yday++;
 }
 
-std::string getDayWeek(int _year=-1, int _yday=-1)
+std::string getDayWeek(int _year = -1, int _yday = -1)
 {
   int year, nweek, wday, yday;
 
@@ -140,7 +141,7 @@ std::string getDayWeek(int _year=-1, int _yday=-1)
   tm tm;
 
   // Si un ou 2 arguments sont passé alors ils vont servir à changer la valeur de now, pour la date mais pas l'heure.
-  if (_yday !=  -1)
+  if (_yday != -1)
   {
     gmtime_s(&tm, &now);
 
@@ -159,7 +160,7 @@ std::string getDayWeek(int _year=-1, int _yday=-1)
 
     if (yday < 1 || yday > days_count(year))
     {
-      return "Day number " + std::to_string(yday) + " for year "+std::to_string(year)+" is not correct.";
+      return "Day number " + std::to_string(yday) + " for year " + std::to_string(year) + " is not correct.";
     }
 
     now = date_time_to_time_t(year, 1, 1) + (yday - 1) * 86400 + tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec;
@@ -175,14 +176,15 @@ std::string getDayWeek(int _year=-1, int _yday=-1)
   char ret[30];
   snprintf(ret, 30, " Day  : %3d \n Week : %3d ", yday, nweek);
   return ret;
-//  std::cout << "Day number in week: " << wday << std::endl;
+  //  std::cout << "Day number in week: " << wday << std::endl;
 }
 
 std::string szClassName;
 COLORREF bgColor;
 HBRUSH bgColorBrush;
 
-void WinError(const char *fmt, ...) {
+void WinError(const char *fmt, ...)
+{
   CHAR *lpMsgBuf;
   char title[1024];
   DWORD len;
@@ -192,104 +194,121 @@ void WinError(const char *fmt, ...) {
   vsnprintf(title, 1024, fmt, ap);
   va_end(ap);
 
-  len=FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
-  lpMsgBuf[len-2]='\0';
-  MessageBox(NULL, lpMsgBuf, title, MB_OK|MB_ICONERROR);
+  len = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(),
+                      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
+  lpMsgBuf[len - 2] = '\0';
+  MessageBox(NULL, lpMsgBuf, title, MB_OK | MB_ICONERROR);
   LocalFree(lpMsgBuf);
 }
 
-void BringMeToTop (HWND hwnd) {
+void BringMeToTop(HWND hwnd)
+{
   SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
   SetForegroundWindow(hwnd);
 }
 
-
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-  switch(msg) {
-    case WM_CREATE: {
-      HWND hw=CreateWindow("STATIC", getDayWeek().c_str(), WS_VISIBLE | WS_CHILD, 0, 0, WIN_WIDTH, WIN_HEIGHT, hwnd, (HMENU)100, GetModuleHandle(NULL), (LPVOID)0); 
-      HFONT hFont=CreateFont(24, 12, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,  CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY,  VARIABLE_PITCH, TEXT("Consolas"));
-      SendMessage(hw, WM_SETFONT, (WPARAM)hFont, 0);
-      SetWindowLong(hwnd, GWL_EXSTYLE , GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED);
-      SetLayeredWindowAttributes(hwnd, bgColor, 0, LWA_COLORKEY);
-      return 0;
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+  switch (msg)
+  {
+  case WM_CREATE: {
+    HWND hw = CreateWindow("STATIC", getDayWeek().c_str(), WS_VISIBLE | WS_CHILD, 0, 0, WIN_WIDTH, WIN_HEIGHT, hwnd,
+                           (HMENU)100, GetModuleHandle(NULL), (LPVOID)0);
+    HFONT hFont = CreateFont(24, 12, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+                             CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Consolas"));
+    SendMessage(hw, WM_SETFONT, (WPARAM)hFont, 0);
+    SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+    SetLayeredWindowAttributes(hwnd, bgColor, 0, LWA_COLORKEY);
+    return 0;
+  }
+  case WM_CTLCOLORSTATIC: {
+    HDC hdcStatic = (HDC)wParam;
+    SetTextColor(hdcStatic, 0);
+    // SetBkColor(hdcStatic, bgColor);
+    return (INT_PTR)bgColorBrush;
+  }
+  case WM_LBUTTONDOWN:
+    break;
+  case WM_CONTEXTMENU: {
+    static HMENU hPopupMenu = NULL;
+    if (hPopupMenu == NULL)
+    {
+      hPopupMenu = CreatePopupMenu();
+      // AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, 101, "Configurer");
+      AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, 102, "Quitter");
     }
-    case WM_CTLCOLORSTATIC:{
-      HDC hdcStatic=(HDC)wParam;
-      SetTextColor(hdcStatic, 0);
-      //SetBkColor(hdcStatic, bgColor);
-      return (INT_PTR)bgColorBrush;
+    POINT cp;
+    GetCursorPos(&cp);
+    TrackPopupMenu(hPopupMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN, cp.x, cp.y, 0, hwnd, NULL);
+  }
+  break;
+  case WM_DESTROY:
+    PostQuitMessage(0);
+    break;
+  case WM_COMMAND:
+    switch (LOWORD(wParam))
+    {
+    case 101:
+      break;
+    case 102:
+      DestroyWindow(hwnd);
+      break;
     }
-    case WM_LBUTTONDOWN:
-      break;
-    case WM_CONTEXTMENU: {
-      static HMENU hPopupMenu = NULL;
-      if (hPopupMenu == NULL) {
-        hPopupMenu=CreatePopupMenu();
-        //AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, 101, "Configurer");
-        AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, 102, "Quitter");
-      }
-      POINT cp;
-      GetCursorPos(&cp);
-      TrackPopupMenu(hPopupMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN, cp.x, cp.y, 0, hwnd, NULL);
-    } break;
-    case WM_DESTROY:
-      PostQuitMessage(0);
-      break;
-    case WM_COMMAND:
-      switch (LOWORD(wParam)) {
-        case 101:
-          break;
-        case 102:
-          DestroyWindow(hwnd);
-          break;
-      }
-      return 0;
-    default:
-      break;
+    return 0;
+  default:
+    break;
   }
   return (LONG)DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow) {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
+{
   szClassName = "weekday";
-  bgColor=0x0027D9D6;
-  bgColorBrush=CreateSolidBrush(bgColor);
+  bgColor = 0x0027D9D6;
+  bgColorBrush = CreateSolidBrush(bgColor);
 
   WNDCLASSEX wc;
-  wc.cbSize=sizeof(WNDCLASSEX);
-  wc.style=0;/* CS_HREDRAW | CS_VREDRAW ; */
-  wc.lpfnWndProc=WndProc;
-  wc.cbClsExtra=0;
-  wc.cbWndExtra=DLGWINDOWEXTRA;
-  wc.hInstance=hInstance;
-  wc.hIcon=LoadIcon(hInstance, IDI_APPLICATION);
-  wc.hCursor=LoadCursor(NULL, IDC_ARROW);
-  wc.hbrBackground=bgColorBrush;
-  wc.lpszClassName=szClassName.c_str();
-  wc.hIcon=LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRAME));
-  wc.hIconSm=LoadIcon(hInstance,  MAKEINTRESOURCE(IDI_MAINFRAME));
+  wc.cbSize = sizeof(WNDCLASSEX);
+  wc.style = 0; /* CS_HREDRAW | CS_VREDRAW ; */
+  wc.lpfnWndProc = WndProc;
+  wc.cbClsExtra = 0;
+  wc.cbWndExtra = DLGWINDOWEXTRA;
+  wc.hInstance = hInstance;
+  wc.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
+  wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wc.hbrBackground = bgColorBrush;
+  wc.lpszClassName = szClassName.c_str();
+  wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRAME));
+  wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRAME));
 
-
-  if(!RegisterClassEx(&wc)) { WinError("RegisterClass"); return 0; }
+  if (!RegisterClassEx(&wc))
+  {
+    WinError("RegisterClass");
+    return 0;
+  }
 
   // Get typical windows title bar height
-  int winTitleHeight=(GetSystemMetrics(SM_CYFRAME)+GetSystemMetrics(SM_CYCAPTION)+GetSystemMetrics(SM_CXPADDEDBORDER));
-  HWND hwnd=CreateWindowEx(WS_EX_TOOLWINDOW, szClassName.c_str(), "", WS_BORDER,
-      GetSystemMetrics(SM_CXFULLSCREEN)-WIN_WIDTH, 0, //GetSystemMetrics(SM_CYFULLSCREEN)+winTitleHeight-WIN_HEIGHT,
-      WIN_WIDTH, WIN_HEIGHT,
-      NULL, NULL, hInstance, NULL); 
-  if (hwnd == NULL) { WinError("CreateWindow"); return 0; }
+  int winTitleHeight =
+      (GetSystemMetrics(SM_CYFRAME) + GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CXPADDEDBORDER));
+  HWND hwnd = CreateWindowEx(WS_EX_TOOLWINDOW, szClassName.c_str(), "", WS_BORDER,
+                             GetSystemMetrics(SM_CXFULLSCREEN) - WIN_WIDTH,
+                             0, // GetSystemMetrics(SM_CYFULLSCREEN)+winTitleHeight-WIN_HEIGHT,
+                             WIN_WIDTH, WIN_HEIGHT, NULL, NULL, hInstance, NULL);
+  if (hwnd == NULL)
+  {
+    WinError("CreateWindow");
+    return 0;
+  }
   SetWindowLong(hwnd, GWL_STYLE, 0);
   ShowWindow(hwnd, nCmdShow);
   UpdateWindow(hwnd);
 
   MSG Msg;
-  while(GetMessage(&Msg, NULL, 0, 0)) {
+  while (GetMessage(&Msg, NULL, 0, 0))
+  {
     TranslateMessage(&Msg);
     DispatchMessage(&Msg);
   }
 
   return 0;
 }
-

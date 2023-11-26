@@ -1,3 +1,2 @@
 
 #define IDI_MAINFRAME 101
-
