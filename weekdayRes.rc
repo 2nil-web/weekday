@@ -1,0 +1,12 @@
+
+#include <windows.h>
+#include "resource.h"
+
+// Icon resources
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+101 ICON "weekday.ico"
+
+// Manifest resources
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "weekdayRes.manifest"
+
