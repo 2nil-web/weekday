@@ -82,7 +82,7 @@ DEFAULT_TARGET=version_check.txt version.h ${PREFIX}.ico ${PREFIX}Res.manifest $
 ${TARGET} : ${ARCH}/${CONF}/${TARGET}
 	cp ${ARCH}/${CONF}/${TARGET} .
 
-${ARCH}/${CONF}/${TARGET} : ${PREFIX}.ico ${PREFIX}Res.manifest ${SRCS} ${RES_SRC}
+${ARCH}/${CONF}/${TARGET} : ${DEFAULT_TARGET} ${SRCS} ${RES_SRC}
 	${MSBUILD} ${PREFIX}.sln -p:Configuration=${CONF}
 else
 DEFAULT_TARGET=version_check.txt version.h ${TARGET}

@@ -8,6 +8,7 @@
 #include <uxtheme.h>
 
 #include "resource.h"
+#include "version.h"
 
 #define WIN_WIDTH  300
 #define WIN_HEIGHT 100
