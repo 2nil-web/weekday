@@ -77,7 +77,7 @@ TARGET=${PREFIX}${EXEXT}
 ARCH=x64
 ifeq ($(DO_MSBUILD),1)
 CONF=Release
-DEFAULT_TARGET=version_check.txt version.h ${PREFIX}.ico ${PREFIX}Res.manifest ${TARGET} README.docx
+DEFAULT_TARGET=version_check.txt version.h ${PREFIX}.ico ${PREFIX}Res.manifest README.docx
 
 ${TARGET} : ${ARCH}/${CONF}/${TARGET}
 	cp ${ARCH}/${CONF}/${TARGET} .
@@ -117,7 +117,7 @@ format :
 	@clang-format -style="{ BasedOnStyle: Microsoft, IndentWidth: 2 }" --sort-includes -i ${ALL_SRCS}
 
 clean :
-	rm -f *~ *.d ${PREFIX}.ico *.o $(OBJS) ${DEFAULT_TARGET} $(TARGET) $(TARGET:.exe=res.manifest)
+	rm -f *~ *.d ${PREFIX}.ico *.o $(OBJS) ${DEFAULT_TARGET} $(TARGET) $(TARGET:.exe=Res.manifest)
 ifeq ($(DO_MSBUILD),1)
 	rm -rf ${ARCH} README.docx
 endif
