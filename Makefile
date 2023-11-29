@@ -74,10 +74,11 @@ TARGET=${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
+DEFAULT_TARGET=version_check.txt version.h ${PREFIX}.ico ${PREFIX}Res.manifest README.docx
+
 ARCH=x64
 ifeq ($(DO_MSBUILD),1)
 CONF=Release
-DEFAULT_TARGET=version_check.txt version.h ${PREFIX}.ico ${PREFIX}Res.manifest README.docx
 
 ${TARGET} : ${ARCH}/${CONF}/${TARGET}
 	cp ${ARCH}/${CONF}/${TARGET} .
@@ -85,14 +86,12 @@ ${TARGET} : ${ARCH}/${CONF}/${TARGET}
 ${ARCH}/${CONF}/${TARGET} : ${DEFAULT_TARGET} ${SRCS} ${RES_SRC}
 	${MSBUILD} ${PREFIX}.sln -p:Configuration=${CONF}
 else
-DEFAULT_TARGET=version_check.txt version.h ${TARGET}
+all : ${DEFAULT_TARGET} ${TARGET}
+	@echo "All done ${DEFAULT_TARGET}"
 
 ${TARGET} : ${OBJS}
 	$(LINK.cc) ${OBJS} $(LOADLIBES) $(LDLIBS) -o $@
 endif
-
-all : ${DEFAULT_TARGET}
-	@echo "All done ${DEFAULT_TARGET}"
 
 gcc : all
 

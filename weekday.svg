@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <svg width="64" height="64" version="1.1" xmlns="http://www.w3.org/2000/svg">
- <text x="2.25" y="26.75" fill="#000000" font-family="sans-serif" font-size="25.6px" stroke-width=".64" style="line-height:1.25" xml:space="preserve"><tspan x="2.25" y="26.75" stroke-width=".64">Week</tspan></text>
- <text x="13.6" y="53.270489" fill="#000000" font-family="sans-serif" font-size="20.48px" stroke-width=".512" style="line-height:1.25" xml:space="preserve"><tspan x="13.6" y="53.270489" stroke-width=".512">Day</tspan></text>
+ <text x="0.25" y="26.75" fill="#000000" font-family="sans-serif" font-size="25.6px" stroke="#fa9a9a" stroke-width=".64" style="line-height:1.25" xml:space="preserve"><tspan x="0.25" y="26.75" stroke="#fa9a9a" stroke-width=".64">Week</tspan></text>
+ <text x="13.6" y="53.270489" fill="#000000" font-family="sans-serif" font-size="20.48px" stroke="#fa9191" stroke-width=".512" style="line-height:1.25" xml:space="preserve"><tspan x="13.6" y="53.270489" stroke="#fa9191" stroke-width=".512">Day</tspan></text>
 </svg>

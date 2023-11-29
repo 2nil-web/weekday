@@ -212,13 +212,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
   switch (msg)
   {
   case WM_CREATE: {
-    HWND hw = CreateWindow("STATIC", getDayWeek().c_str(), WS_VISIBLE | WS_CHILD, 0, 0, WIN_WIDTH, WIN_HEIGHT, hwnd,
+    std::string dw=getDayWeek();
+    HWND hw = CreateWindow("STATIC", dw.c_str(), WS_VISIBLE | WS_CHILD, 0, 0, WIN_WIDTH, WIN_HEIGHT, hwnd,
                            (HMENU)100, GetModuleHandle(NULL), (LPVOID)0);
     HFONT hFont = CreateFont(24, 12, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
                              CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Consolas"));
     SendMessage(hw, WM_SETFONT, (WPARAM)hFont, 0);
     SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED);
     SetLayeredWindowAttributes(hwnd, bgColor, 0, LWA_COLORKEY);
+    int w=12*24;
+    int h=48;
+    SetWindowPos(hw, HWND_TOP, 0, 0, w, h, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+    RECT rc;
+    GetWindowRect(hwnd, &rc);
+    SetWindowPos(hwnd, HWND_TOP, rc.left, rc.top, w, h, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
     return 0;
   }
   case WM_CTLCOLORSTATIC: {
