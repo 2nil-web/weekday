@@ -137,13 +137,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="calendar.cpp" />
+    <ClCompile Include="registry.cpp" />
     <ClCompile Include="weekday.cpp" />
+    <ClCompile Include="winapi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="weekdayRes.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="calendar.h" />
+    <ClInclude Include="registry.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="winapi.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="weekday.ico" />
