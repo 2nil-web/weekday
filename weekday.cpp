@@ -19,6 +19,8 @@ int WIN_WIDTH=150;
 int WIN_HEIGHT=50;
 
 
+#define trc std::cout << "File " << __FILE__ << ", LINE " << __LINE__ << std::endl;
+
 std::string szClassName;
 
 bool ctrl_pressed() {
@@ -56,8 +58,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       if (hPopupMenu == NULL)
       {
         hPopupMenu = CreatePopupMenu();
-        // AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, 101, "Configurer");
-        AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, 102, "Quitter");
+        // AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, MENU_CONF, "Configurer");
+        AppendMenu(hPopupMenu, MF_BYPOSITION | MF_STRING, MENU_QUIT, "Quitter");
       }
       POINT cp;
       GetCursorPos(&cp);
@@ -71,9 +73,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
   case WM_COMMAND:
     switch (LOWORD(wParam))
     {
-    case 101:
+    case MENU_CONF:
       break;
-    case 102:
+    case MENU_QUIT:
       DestroyWindow(hwnd);
       break;
     }
@@ -98,6 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
   wc.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
   wc.hCursor = LoadCursor(NULL, IDC_ARROW);
   wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+  wc.lpszMenuName = (szClassName+"Menu").c_str();
   wc.lpszClassName = szClassName.c_str();
   wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRAME));
   wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRAME));

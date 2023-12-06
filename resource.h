@@ -1,2 +1,5 @@
 
 #define IDI_MAINFRAME 101
+
+#define MENU_CONF 110
+#define MENU_QUIT 112
