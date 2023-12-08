@@ -172,4 +172,3 @@ std::string getDayWeek(int _year = -1, int _yday = -1)
   return ret;
   //  std::cout << "Day number in week: " << wday << std::endl;
 }
-

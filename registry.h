@@ -17,4 +17,3 @@ void PutRegIntArray(const std::string subKey, const std::string var, int size, i
 void PutRegBin(const std::string subKey, const std::string var, DWORD size, CONST BYTE *val);
 
 #endif /* REGHANDLE_H */
-
