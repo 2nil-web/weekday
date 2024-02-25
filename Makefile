@@ -1,4 +1,6 @@
 
+unexport TMP TEMP
+
 # Bug d'affichage avec uname sous clang64 ...
 ifeq (${MSYSTEM},CLANG64)
 	UNAME=/usr/bin/uname
