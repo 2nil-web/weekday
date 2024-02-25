@@ -16,3 +16,5 @@ version.json
 *.manifest
 README.docx
 .vs
+*.vcxproj.user
+*.lnk
